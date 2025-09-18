@@ -1,24 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function Semaforo({ setColorSemaforo }) {
+export default function Semaforo({ estado }) {
+  const [cambio, setCambio] = useState({ rojo: "", amarillo: "", verde: "" });
+
+  const cambiarColor = (color) => {
+    estado(color);
+
+    if (color === "#FF0000") {
+      setCambio({ rojo: "disabled", amarillo: "", verde: "" });
+    } else if (color === "#FFFF00") {
+      setCambio({ rojo: "", amarillo: "disabled", verde: "" });
+    } else if (color === "#00FF00") {
+      setCambio({ rojo: "", amarillo: "", verde: "disabled" });
+    }
+
+    console.log(color);
+  };
 
   return (
     <div className="d-flex flex-wrap justify-content-center gap-2">
       <button
-        className="btn btn-outline-danger mb-4 mt-4"
-        onClick={() => setColorSemaforo('#FF0000 ')}
+        disabled={cambio.rojo === "disabled"}
+        className="btn btn-danger mb-4 mt-4"
+        onClick={() => cambiarColor("#FF0000")}
       >
         ROJO
       </button>
       <button
-        className="btn btn-outline-warning mb-4 mt-4"
-        onClick={() => setColorSemaforo('#FFFF00')}
+        disabled={cambio.amarillo === "disabled"}
+        className="btn btn-warning mb-4 mt-4"
+        onClick={() => cambiarColor("#FFFF00")}
       >
         AMARILLO
       </button>
       <button
-        className="btn btn-outline-success mb-4 mt-4"
-        onClick={() => setColorSemaforo('#00FF00')}
+        disabled={cambio.verde === "disabled"}
+        className="btn btn-success mb-4 mt-4"
+        onClick={() => cambiarColor("#00FF00")}
       >
         VERDE
       </button>
